@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: memify-backend:latest
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+      - PORT=5001
+      - ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+    volumes:
+      - ./temp:/app/temp    # persister fichiers temporaires localement (optionnel)
+      - ./:/app             # bind mount for hot dev (optional; remove for prod)
+    stdin_open: true
+    tty: true
