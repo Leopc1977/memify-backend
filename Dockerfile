@@ -1,9 +1,16 @@
 # Utiliser Node.js officiel en version alpine
 FROM node:20-alpine
 
-# Installer ffmpeg et yt-dlp
+# Installer ffmpeg, python et pip
 RUN apk add --no-cache ffmpeg python3 py3-pip bash curl
-RUN pip3 install yt-dlp
+
+# Créer un virtual environment pour Python
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Installer yt-dlp dans le venv
+RUN pip install --upgrade pip
+RUN pip install yt-dlp
 
 # Créer le répertoire de l'application
 WORKDIR /app
@@ -11,7 +18,7 @@ WORKDIR /app
 # Copier package.json et package-lock.json
 COPY package*.json ./
 
-# Installer les dépendances
+# Installer les dépendances Node.js
 RUN npm install --production
 
 # Copier le reste du code
