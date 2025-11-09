@@ -102,9 +102,9 @@ app.post("/generate", upload.single("file"), async (req, res) => {
     // 3️⃣ Télécharger audio YouTube
     const downloadSection = !useFullAudio && end ? `*${start}-${end}` : `*${start}-`;
     execSync(
-      `yt-dlp -x --audio-format mp3 --download-sections "${downloadSection}" -o "${audioPath}" "${youtubeUrl}"`,
+      `yt-dlp --cookies cookies.txt -x --audio-format mp3 --download-sections "${downloadSection}" -o "${audioPath}" "${youtubeUrl}"`,
       { stdio: "inherit" }
-    );
+    );    
 
     // 4️⃣ Créer vidéo (image + audio)
     execSync(
