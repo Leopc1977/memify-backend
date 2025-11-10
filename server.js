@@ -125,5 +125,9 @@ app.post("/generate", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get("/generate", (req, res) => {
+  res.status(200).send("OK");
+});
+
 
 app.listen(5001, () => console.log("Backend running on port 5001"));
