@@ -30,5 +30,8 @@ RUN mkdir -p temp
 # Exposer le port utilisé par ton serveur
 EXPOSE 5001
 
+# Healthcheck pour Traefik
+HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD curl -f http://localhost:5001/generate || exit 1
+
 # Commande pour démarrer le serveur
 CMD ["npm", "start"]
