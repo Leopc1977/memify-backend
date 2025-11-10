@@ -16,12 +16,18 @@ const allowedOrigins = [
 app.use(cors({
   origin: (origin, callback) => {
     console.log("Origin:", origin);
-    if (!origin || allowedOrigins.includes(origin)) callback(null, true);
-    else callback(null, false);
+    // autorise les requêtes sans origin (ex: backend -> backend)
+    // ou ton frontend
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"), false);
+    }
   },
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 const upload = multer({
     dest: "temp/",
